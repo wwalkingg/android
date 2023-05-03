@@ -47,6 +47,7 @@ dependencies {
     implementation(project(":feature:my-collect"))
     implementation(project(":feature:my-subscribe"))
     implementation(project(":feature:search"))
+    implementation(project(":feature:splash"))
 
     implementation(project(":core:common"))
     implementation(project(":core:ui"))

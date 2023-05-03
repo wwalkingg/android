@@ -36,7 +36,7 @@ class RootComponent(componentContext: ComponentContext) : ComponentContext by co
     private val _childStack =
         childStack(
             source = rootNavigation,
-            initialConfiguration = if (isLogin) Config.RootConfig.Home else Config.RootConfig.Login,
+            initialConfiguration = Config.RootConfig.Splash,
             handleBackButton = true,
             childFactory = ::createChild,
         )
@@ -72,6 +72,7 @@ class RootComponent(componentContext: ComponentContext) : ComponentContext by co
             Config.RootConfig.MySubscribe -> Child.MySubscribe(MySubscribeComponent(componentContext))
             Config.RootConfig.Search -> Child.Search(SearchComponent(componentContext))
             Config.RootConfig.PasswordModifier -> Child.PasswordModifier(PasswordModifierComponent(componentContext))
+            Config.RootConfig.Splash -> Child.Splash
         }
     }
 
@@ -91,6 +92,7 @@ class RootComponent(componentContext: ComponentContext) : ComponentContext by co
         data class MyCollect(val component: MyCollectComponent) : Child
         data class MySubscribe(val component: MySubscribeComponent) : Child
         data class Search(val component: SearchComponent) : Child
+        object Splash:Child
     }
 
 }

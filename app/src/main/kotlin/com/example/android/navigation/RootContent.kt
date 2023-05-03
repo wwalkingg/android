@@ -1,6 +1,7 @@
 package com.example.android.navigation
 
 import SearchScreen
+import SplashScreen
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -43,6 +44,7 @@ fun RootContent(component: RootComponent, modifier: Modifier = Modifier) {
             is RootComponent.Child.MyCollect -> MyCollectScreen(Modifier.fillMaxSize(), child.component)
             is RootComponent.Child.MySubscribe -> MySubscribeScreen(Modifier.fillMaxSize(), child.component)
             is RootComponent.Child.Search -> SearchScreen(Modifier.fillMaxSize(), child.component)
+            RootComponent.Child.Splash -> SplashScreen()
         }
     }
 }

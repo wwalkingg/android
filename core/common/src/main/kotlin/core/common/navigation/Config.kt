@@ -46,6 +46,9 @@ interface Config : Parcelable {
 
         @Parcelize
         object Search : RootConfig
+
+        @Parcelize
+        object Splash : RootConfig
     }
 
 }

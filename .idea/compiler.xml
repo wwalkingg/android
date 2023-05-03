@@ -1,6 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="CompilerConfiguration">
-    <bytecodeTargetLevel target="17" />
+    <bytecodeTargetLevel target="17">
+      <module name="android.feature.address-management" target="17" />
+      <module name="android.feature.all-articles" target="17" />
+      <module name="android.feature.article-detail" target="17" />
+      <module name="android.feature.collection-product" target="17" />
+      <module name="android.feature.login" target="17" />
+      <module name="android.feature.modifier-userinfo" target="17" />
+      <module name="android.feature.order-management" target="17" />
+      <module name="android.feature.product-detail" target="17" />
+      <module name="android.feature.reward-points" target="17" />
+      <module name="android.feature.store-detail" target="17" />
+    </bytecodeTargetLevel>
   </component>
 </project>
