@@ -10,6 +10,7 @@ android {
 
 dependencies {
     implementation(project(":core:network"))
+    implementation(project(":feature:calendar"))
     implementation(project(":feature:my-subscribe"))
     implementation("com.github.madrapps:plot:0.1.1")
 }

@@ -12,6 +12,7 @@ import feature.auth.LoginComponent
 import feature.auth.PasswordModifierComponent
 import feature.auth.RegisterComponent
 import feature.auth.UserInfoModifierComponent
+import feature.calendar.CalendarComponent
 import feature.coach_detail.CoachDetailComponent
 import feature.course_all.CoachAllComponent
 import feature.course_detail.CourseDetailComponent
@@ -36,7 +37,7 @@ class RootComponent(componentContext: ComponentContext) : ComponentContext by co
     private val _childStack =
         childStack(
             source = rootNavigation,
-            initialConfiguration = Config.RootConfig.Splash,
+            initialConfiguration = Config.RootConfig.Home,
             handleBackButton = true,
             childFactory = ::createChild,
         )
@@ -73,6 +74,7 @@ class RootComponent(componentContext: ComponentContext) : ComponentContext by co
             Config.RootConfig.Search -> Child.Search(SearchComponent(componentContext))
             Config.RootConfig.PasswordModifier -> Child.PasswordModifier(PasswordModifierComponent(componentContext))
             Config.RootConfig.Splash -> Child.Splash
+            Config.RootConfig.Calendar -> Child.Calendar(CalendarComponent(componentContext))
         }
     }
 
@@ -93,6 +95,7 @@ class RootComponent(componentContext: ComponentContext) : ComponentContext by co
         data class MySubscribe(val component: MySubscribeComponent) : Child
         data class Search(val component: SearchComponent) : Child
         object Splash:Child
+        data class Calendar(val component: CalendarComponent):Child
     }
 
 }

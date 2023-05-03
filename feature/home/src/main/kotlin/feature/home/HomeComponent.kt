@@ -6,6 +6,7 @@ import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.decompose.childContext
 import com.arkivanov.essenty.instancekeeper.getOrCreate
 import core.design_system.Icons
+import feature.calendar.CalendarComponent
 import feature.home.me.MeComponent
 import feature.home.recommend.RecommendComponent
 import feature.home.statistic.StatisticComponent
@@ -19,6 +20,7 @@ class HomeComponent(componentContext: ComponentContext) :
 
     val recommendComponent = RecommendComponent(componentContext.childContext("recommendComponent"))
     val meComponent = MeComponent(componentContext.childContext("meComponent"))
+    val calendarComponent = CalendarComponent(componentContext.childContext("calendar"))
     val statisticComponent = StatisticComponent(componentContext.childContext("statisticComponent"))
     val myScripeComponent = MySubscribeComponent(componentContext.childContext("myScripeComponent"))
 

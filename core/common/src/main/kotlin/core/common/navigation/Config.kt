@@ -49,6 +49,9 @@ interface Config : Parcelable {
 
         @Parcelize
         object Splash : RootConfig
+
+        @Parcelize
+        object Calendar: RootConfig
     }
 
 }

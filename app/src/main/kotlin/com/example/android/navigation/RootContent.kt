@@ -13,6 +13,7 @@ import feature.auth.LoginScreen
 import feature.auth.PasswordModifierScreen
 import feature.auth.RegisterScreen
 import feature.auth.UserInfoModifierScreen
+import feature.calendar.CalendarScreen
 import feature.coach_detail.CoachDetailScreen
 import feature.course_all.CoachAllScreen
 import feature.course_detail.CourseDetailScreen
@@ -45,6 +46,7 @@ fun RootContent(component: RootComponent, modifier: Modifier = Modifier) {
             is RootComponent.Child.MySubscribe -> MySubscribeScreen(Modifier.fillMaxSize(), child.component)
             is RootComponent.Child.Search -> SearchScreen(Modifier.fillMaxSize(), child.component)
             RootComponent.Child.Splash -> SplashScreen()
+            is RootComponent.Child.Calendar -> CalendarScreen(component = child.component)
         }
     }
 }

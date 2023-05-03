@@ -13,6 +13,7 @@ import androidx.compose.ui.zIndex
 import com.arkivanov.decompose.router.stack.push
 import core.common.navigation.Config
 import core.common.navigation.rootNavigation
+import feature.calendar.CalendarScreen
 import feature.home.me.MeComponent
 import feature.home.me.MeScreen
 import feature.home.recommend.RecommendComponent
@@ -28,9 +29,7 @@ import kotlinx.coroutines.launch
 fun HomeScreen(modifier: Modifier = Modifier, component: HomeComponent) {
     val scope = rememberCoroutineScope()
     val menu = BottomMenu.values()[
-        if (component.pagerState.currentPage > 1)
-            component.pagerState.currentPage + 1
-        else component.pagerState.currentPage
+        component.pagerState.currentPage
     ]
     Scaffold(
         modifier,
@@ -43,16 +42,16 @@ fun HomeScreen(modifier: Modifier = Modifier, component: HomeComponent) {
                     when (it) {
                         BottomMenu.Recommend -> component.pagerState.animateScrollToPage(0)
                         BottomMenu.Plan -> component.pagerState.animateScrollToPage(1)
-                        BottomMenu.Person -> rootNavigation.push(Config.RootConfig.PersonHealth)
-                        BottomMenu.Statistics -> component.pagerState.animateScrollToPage(2)
-                        BottomMenu.User -> component.pagerState.animateScrollToPage(3)
+                        BottomMenu.Person -> component.pagerState.animateScrollToPage(2)
+                        BottomMenu.Statistics -> component.pagerState.animateScrollToPage(3)
+                        BottomMenu.User -> component.pagerState.animateScrollToPage(4)
                     }
                 }
             }
         }
     ) { padding ->
         HorizontalPager(
-            4,
+            5,
             state = component.pagerState,
             modifier = Modifier
                 .padding(padding)
@@ -61,8 +60,9 @@ fun HomeScreen(modifier: Modifier = Modifier, component: HomeComponent) {
             when (it) {
                 0 -> RecommendScreen(component = component.recommendComponent)
                 1 -> MySubscribeScreen(component = component.myScripeComponent)
-                2 -> StatisticScreen(component = component.statisticComponent)
-                3 -> MeScreen(component = component.meComponent)
+                2 -> CalendarScreen(component = component.calendarComponent)
+                3 -> StatisticScreen(component = component.statisticComponent)
+                4 -> MeScreen(component = component.meComponent)
             }
         }
     }
