@@ -22,7 +22,6 @@ import androidx.compose.ui.viewinterop.AndroidView
 import com.google.android.exoplayer2.ExoPlayer
 import com.google.android.exoplayer2.MediaItem
 import com.google.android.exoplayer2.ui.StyledPlayerView
-import core.ui.component.NavigationTopBar
 import kotlinx.datetime.Clock
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.TimeZone
@@ -32,7 +31,7 @@ import kotlinx.datetime.toLocalDateTime
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CalendarScreen(component: CalendarComponent) {
-    Scaffold(topBar = { NavigationTopBar(title = "") }) { padding ->
+    Scaffold { padding ->
         var dateTime by remember {
             mutableStateOf(Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault()).date)
         }
@@ -73,7 +72,7 @@ fun CalendarScreen(component: CalendarComponent) {
                         }
                         Spacer(modifier = Modifier.height(10.dp))
                         val context = LocalContext.current
-                        var player = remember {
+                        val player = remember {
                             ExoPlayer.Builder(context).build()
                         }
                         Box(
@@ -87,7 +86,7 @@ fun CalendarScreen(component: CalendarComponent) {
                                 view.setFullscreenButtonClickListener {
                                     val intent = Intent(context, FullScreenVideoActivity::class.java).apply {
                                         flags = Intent.FLAG_ACTIVITY_NEW_TASK
-                                        putExtra("exoPlayer", ExoPlayerWrapper().apply { this.player = player })
+                                        putExtra("url", "")
                                     }
                                     with(context.findActivity()) {
                                         this?.startActivity(intent)

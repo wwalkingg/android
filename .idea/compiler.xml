@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="CompilerConfiguration">
-    <bytecodeTargetLevel target="17">
+    <bytecodeTargetLevel target="11">
       <module name="android.feature.address-management" target="17" />
       <module name="android.feature.all-articles" target="17" />
       <module name="android.feature.article-detail" target="17" />

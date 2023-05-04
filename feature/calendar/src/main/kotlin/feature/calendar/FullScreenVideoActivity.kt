@@ -35,9 +35,10 @@ class FullScreenVideoActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             val context = LocalContext.current
-            val exoPlayerWrapper = intent.getSerializableExtra("exoPlayer") as ExoPlayerWrapper
-            val exoPlayer = exoPlayerWrapper.player
-            val player = exoPlayer!!
+            val exoPlayer = remember {
+                ExoPlayer.Builder(context).build()
+            }
+            val player = exoPlayer
             MaterialTheme {
                 Column(
                     modifier = Modifier
@@ -49,7 +50,6 @@ class FullScreenVideoActivity : ComponentActivity() {
                         view.player = player
                         view.setFullscreenButtonClickListener {
                             player.pause()
-                            player.release()
                             this@FullScreenVideoActivity.finish()
                         }
                         view
