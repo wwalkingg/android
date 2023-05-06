@@ -14,7 +14,17 @@ import com.arkivanov.decompose.router.stack.pop
 import core.common.navigation.rootNavigation
 import core.design_system.Icons
 import core.design_system.component.loading
+import core.model.Course
+import core.network.utils.ResponseWrapper
 import core.ui.status_page.ErrorPage
+import httpClient
+import io.ktor.client.call.*
+import io.ktor.client.request.*
+import io.ktor.http.*
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.channels.awaitClose
+import kotlinx.coroutines.flow.callbackFlow
+import java.time.LocalDate
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -46,7 +56,11 @@ fun CourseDetailScreen(modifier: Modifier = Modifier, component: CourseDetailCom
                 }
 
                 CourseLoadState.Loading -> {
-                    Box(modifier = Modifier.fillMaxSize().loading())
+                    Box(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .loading()
+                    )
                 }
 
                 is CourseLoadState.Success -> {
@@ -79,7 +93,9 @@ fun BottomBar(
     onSubscribeClick: () -> Unit
 ) {
     Row(
-        modifier.fillMaxWidth().padding(10.dp),
+        modifier
+            .fillMaxWidth()
+            .padding(10.dp),
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
     ) {

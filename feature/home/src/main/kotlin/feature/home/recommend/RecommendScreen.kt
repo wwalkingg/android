@@ -39,7 +39,7 @@ fun RecommendScreen(modifier: Modifier = Modifier, component: RecommendComponent
             Swiper(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(140.dp),
+                    .height(240.dp),
                 list = component.modelState.swiperList,
             )
             FunctionalMenus(modifier = Modifier

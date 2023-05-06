@@ -12,5 +12,5 @@ dependencies {
 //    implementation(libs.androidx.compose.material3.windowSizeClass)
     implementation(project(":core:network"))
     implementation(libs.kotlinx.datetime)
-    implementation("com.google.android.exoplayer:exoplayer:2.18.6")
+
 }

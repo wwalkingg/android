@@ -9,6 +9,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
@@ -62,7 +63,8 @@ fun PartnerFindScreen(modifier: Modifier = Modifier, component: PartnerFindCompo
                                             model = baseUrl + it.avatar,
                                             contentDescription = null,
                                             modifier = Modifier.clip(CircleShape).size(60.dp)
-                                                .background(MaterialTheme.colorScheme.primaryContainer)
+                                                .background(MaterialTheme.colorScheme.primaryContainer),
+                                            contentScale = ContentScale.Crop
                                         )
                                         Spacer(Modifier.width(10.dp))
                                         Text(it.name, style = MaterialTheme.typography.titleLarge)
@@ -131,7 +133,8 @@ fun PartnerFindScreen(modifier: Modifier = Modifier, component: PartnerFindCompo
                                                 model = baseUrl + it.avatar,
                                                 contentDescription = null,
                                                 modifier = Modifier.clip(CircleShape).size(60.dp)
-                                                    .background(MaterialTheme.colorScheme.primaryContainer)
+                                                    .background(MaterialTheme.colorScheme.primaryContainer),
+                                                contentScale = ContentScale.Crop
                                             )
                                             Spacer(Modifier.width(10.dp))
                                             Text(it.name, style = MaterialTheme.typography.titleLarge)

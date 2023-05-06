@@ -13,6 +13,8 @@ dependencies {
     implementation(project(":core:common"))
 
     implementation(libs.androidx.core.ktx)
+    implementation(libs.androidx.activity.compose)
+    implementation(libs.androidx.appcompat)
     implementation(libs.coil.kt)
     implementation(libs.coil.kt.compose)
     implementation(libs.kotlinx.datetime)
@@ -26,5 +28,7 @@ dependencies {
     api(libs.androidx.compose.ui.util)
     api(libs.androidx.compose.runtime)
     api(libs.androidx.compose.runtime.livedata)
+
+    implementation("com.google.android.exoplayer:exoplayer:2.18.6")
 
 }

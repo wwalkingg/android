@@ -15,5 +15,6 @@ data class Course(
     val experienceRequirement: Int,
     val times:Int,
     val courseIntroduce:String,
-    val tag:Int
+    val tag:Int,
+    val video:String
 )

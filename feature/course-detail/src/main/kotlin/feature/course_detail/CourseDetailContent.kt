@@ -1,9 +1,6 @@
 package feature.course_detail
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Divider
@@ -16,15 +13,16 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import core.common.baseUrl
 import core.model.Course
+import core.ui.video_player.VideoPlayer
 
 @Composable
 fun CourseDetailContent(modifier: Modifier = Modifier, course: Course) {
     Column(modifier.verticalScroll(rememberScrollState()), verticalArrangement = Arrangement.spacedBy(5.dp)) {
-        AsyncImage(
-            model = baseUrl + course.cover,
-            contentDescription = null,
-            modifier = Modifier.fillMaxWidth(),
-            contentScale = ContentScale.Crop
+        VideoPlayer(
+            url = baseUrl + course.video,
+            modifier = Modifier
+                .fillMaxWidth()
+                .aspectRatio(16/9f)
         )
         Column(modifier = Modifier.padding(horizontal = 10.dp), verticalArrangement = Arrangement.spacedBy(5.dp)) {
             Text(course.title, style = MaterialTheme.typography.titleLarge)
@@ -37,6 +35,12 @@ fun CourseDetailContent(modifier: Modifier = Modifier, course: Course) {
                 style = MaterialTheme.typography.titleMedium
             )
             Divider()
+            AsyncImage(
+                model = baseUrl + course.cover,
+                contentDescription = null,
+                modifier = Modifier.fillMaxWidth(),
+                contentScale = ContentScale.Crop
+            )
             Text(
                 text = course.courseIntroduce,
                 style = MaterialTheme.typography.bodyLarge

@@ -28,8 +28,8 @@ import core.design_system.Icons
 @Composable
 internal fun FunctionalMenus(modifier: Modifier = Modifier, onClick: (FunctionalMenu) -> Unit) {
     Row(
-        modifier = modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.SpaceBetween,
+        modifier = modifier.fillMaxWidth().padding(vertical = 5.dp),
+        horizontalArrangement = Arrangement.SpaceAround,
         verticalAlignment = Alignment.CenterVertically
     ) {
         FunctionalMenu.values().forEach {
@@ -37,13 +37,14 @@ internal fun FunctionalMenus(modifier: Modifier = Modifier, onClick: (Functional
                 modifier = Modifier
                     .clip(MaterialTheme.shapes.medium)
                     .clickable { onClick(it) }
-                    .padding(5.dp),
-                horizontalAlignment = Alignment.CenterHorizontally
+                    .padding(6.dp)
+                ,
+                horizontalAlignment = Alignment.CenterHorizontally,
             ) {
                 CompositionLocalProvider(LocalContentColor provides MaterialTheme.colorScheme.onPrimaryContainer) {
                     Icon(
                         modifier = Modifier
-                            .size(42.dp)
+                            .size(52.dp)
                             .clip(CircleShape)
                             .background(MaterialTheme.colorScheme.primaryContainer)
                             .padding(10.dp),

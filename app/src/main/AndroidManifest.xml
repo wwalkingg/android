@@ -24,7 +24,7 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name="feature.calendar.FullScreenVideoActivity"/>
+        <activity android:name="core.ui.video_player.FullScreenVideoActivity"/>
     </application>
 
 </manifest>
