@@ -37,7 +37,7 @@ class RootComponent(componentContext: ComponentContext) : ComponentContext by co
     private val _childStack =
         childStack(
             source = rootNavigation,
-            initialConfiguration = Config.RootConfig.Home,
+            initialConfiguration = Config.RootConfig.Splash,
             handleBackButton = true,
             childFactory = ::createChild,
         )

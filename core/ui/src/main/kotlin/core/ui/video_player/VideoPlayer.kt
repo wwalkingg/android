@@ -7,6 +7,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -26,12 +27,21 @@ fun VideoPlayer(modifier: Modifier = Modifier, url: String,containerColor:Color 
             prepare()
         }
     }
+    DisposableEffect(Unit){
+        onDispose {
+            exoPlayer.pause()
+            exoPlayer.release()
+        }
+    }
     Box(modifier = modifier) {
         AndroidView(modifier = Modifier.fillMaxSize().background(containerColor), factory = { context ->
             val view = StyledPlayerView(context)
                 .apply {
                     player = exoPlayer
-                    setFullscreenButtonClickListener { context.startFullScreenVideoPlayer(url) }
+                    setFullscreenButtonClickListener {
+                        exoPlayer.pause()
+                        context.startFullScreenVideoPlayer(url)
+                    }
                 }
             view
         }, update = {})

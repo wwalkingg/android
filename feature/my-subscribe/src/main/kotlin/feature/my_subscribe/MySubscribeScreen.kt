@@ -36,11 +36,11 @@ fun MySubscribeScreen(modifier: Modifier = Modifier, component: MySubscribeCompo
                 }
 
                 is LoadMySubscribeUIState.Success -> {
-                    (loadMyCollectUIState as LoadMySubscribeUIState.Success).data.forEach {
-                        Column(
-                            modifier = Modifier.fillMaxSize().padding(5.dp),
-                            verticalArrangement = Arrangement.spacedBy(5.dp)
-                        ) {
+                    Column(
+                        modifier = Modifier.fillMaxSize().padding(5.dp),
+                        verticalArrangement = Arrangement.spacedBy(5.dp)
+                    ) {
+                        (loadMyCollectUIState as LoadMySubscribeUIState.Success).data.forEach {
                             CourseCard(
                                 modifier = Modifier.fillMaxWidth(),
                                 course = it,
@@ -57,7 +57,7 @@ fun MySubscribeScreen(modifier: Modifier = Modifier, component: MySubscribeCompo
 @Composable
 private fun TopBar(onRefreshClick: () -> Unit) {
     TopAppBar(title = {
-        Text("我的计划")
+        Text("我的订阅")
     }, actions = {
         IconButton(onClick = { onRefreshClick() }) {
             Icon(Icons.Default.Refresh, contentDescription = null)

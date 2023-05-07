@@ -3,21 +3,26 @@ package feature.partner_find
 import ModelState
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.essenty.instancekeeper.getOrCreate
+import core.model.Course
 import core.model.Partner
 import core.model.PartnerSimple
-import core.model.UserInfo
+import core.network.utils.ResponseWrapper
 import core.network.utils.error
 import core.network.utils.success
 import httpClient
+import io.ktor.client.call.*
 import io.ktor.client.request.*
 import io.ktor.http.*
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.callbackFlow
+import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
 
 class PartnerFindComponent(componentContext: ComponentContext) : ComponentContext by componentContext {
@@ -103,6 +108,19 @@ internal class PartnerFindModelState : ModelState() {
                 snackBarState.showSnackbar(message = "取消失败", withDismissAction = true)
             }
         }
+    }
+
+}
+
+fun getCourseByUser(userId: Int) = callbackFlow {
+    httpClient.get("/courses/user/${userId}").apply {
+        if (status.isSuccess()) {
+            val resp = body<ResponseWrapper<List<Course>>>()
+            if (resp.code == 200) {
+                send(resp.data)
+            } else this@callbackFlow.cancel(resp.msg)
+        } else this@callbackFlow.cancel(status.description)
+        awaitClose { }
     }
 }
 

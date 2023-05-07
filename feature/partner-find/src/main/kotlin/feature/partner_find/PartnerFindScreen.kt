@@ -1,9 +1,12 @@
 package feature.partner_find
 
+import LoadUIState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -15,12 +18,17 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import coil.compose.AsyncImage
 import com.arkivanov.decompose.router.stack.pop
+import com.arkivanov.decompose.router.stack.push
 import core.common.baseUrl
+import core.common.navigation.Config
 import core.common.navigation.rootNavigation
 import core.design_system.Icons
 import core.design_system.component.loading
-import core.model.PartnerSimple
+import core.model.Course
+import core.ui.component.CourseCard
 import core.ui.status_page.ErrorPage
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.onStart
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -53,8 +61,12 @@ fun PartnerFindScreen(modifier: Modifier = Modifier, component: PartnerFindCompo
                         Column {
                             list.forEach {
                                 var isCancelConfirmDialogVisible by remember { mutableStateOf(false) }
+                                var isPartnerCourseVisible by remember {
+                                    mutableStateOf(false)
+                                }
                                 Row(
-                                    modifier = Modifier.fillMaxWidth().clickable { }.padding(vertical = 5.dp),
+                                    modifier = Modifier.fillMaxWidth().clickable { isPartnerCourseVisible = true }
+                                        .padding(vertical = 5.dp),
                                     horizontalArrangement = Arrangement.SpaceBetween,
                                     verticalAlignment = Alignment.CenterVertically
                                 ) {
@@ -80,6 +92,73 @@ fun PartnerFindScreen(modifier: Modifier = Modifier, component: PartnerFindCompo
 
                                 }
                                 Divider()
+                                if (isPartnerCourseVisible) {
+                                    var loadUIState: LoadUIState<List<Course>> by remember { mutableStateOf(LoadUIState.Loading) }
+                                    LaunchedEffect(Unit) {
+                                        getCourseByUser(it.id)
+                                            .onStart { loadUIState = LoadUIState.Loading }
+                                            .catch { it.printStackTrace();loadUIState = LoadUIState.Error(it) }
+                                            .collect {
+                                                loadUIState = LoadUIState.Success(it)
+                                            }
+                                    }
+                                    Dialog(
+                                        onDismissRequest = { isPartnerCourseVisible = false }) {
+                                        Column(
+                                            modifier = Modifier
+                                                .clip(MaterialTheme.shapes.medium)
+                                                .background(MaterialTheme.colorScheme.surface)
+                                                .fillMaxWidth()
+                                                .padding(20.dp, 5.dp),
+                                            verticalArrangement = Arrangement.spacedBy(10.dp)
+                                        ) {
+                                            Text("查看好友课程", style = MaterialTheme.typography.titleLarge)
+                                            Column(
+                                                modifier = Modifier.height(400.dp)
+                                            ) {
+                                                when (loadUIState) {
+                                                    is LoadUIState.Error -> {
+                                                        Text("出现了一点问题")
+                                                    }
+
+                                                    LoadUIState.Loading -> {
+                                                        CircularProgressIndicator()
+                                                    }
+
+                                                    is LoadUIState.Success -> {
+                                                        val data =
+                                                            (loadUIState as LoadUIState.Success<List<Course>>).data
+                                                        if (data.isEmpty()) {
+                                                            Text("暂时未参加任何课程")
+                                                        } else {
+                                                            Column(
+                                                                Modifier.heightIn(min = 300.dp, max = 500.dp)
+                                                                    .verticalScroll(
+                                                                        rememberScrollState()
+                                                                    ), verticalArrangement = Arrangement.spacedBy(5.dp)
+                                                            ) {
+                                                                data.forEach {
+                                                                    CourseCard(
+                                                                        modifier = Modifier.fillMaxWidth(),
+                                                                        course = it,
+                                                                        onClick = {
+                                                                            rootNavigation.push(
+                                                                                Config.RootConfig.CourseDetail(it)
+                                                                            )
+                                                                        })
+                                                                }
+                                                            }
+                                                        }
+
+                                                    }
+                                                }
+                                            }
+                                            TextButton(onClick = { isPartnerCourseVisible = false },modifier = Modifier.align(Alignment.End)) {
+                                                Text("确定")
+                                            }
+                                        }
+                                    }
+                                }
                                 if (isCancelConfirmDialogVisible) {
                                     AlertDialog(
                                         onDismissRequest = { isCancelConfirmDialogVisible = false },
@@ -177,6 +256,7 @@ fun PartnerFindScreen(modifier: Modifier = Modifier, component: PartnerFindCompo
                 }
             }
         }
+
         if (component.modelState.isLoading) {
             Dialog(onDismissRequest = {}) {
                 Box(

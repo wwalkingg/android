@@ -3,6 +3,7 @@ package feature.my_collect
 import ModelState
 import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.essenty.instancekeeper.getOrCreate
+import com.arkivanov.essenty.lifecycle.subscribe
 import core.model.Course
 import core.network.utils.error
 import core.network.utils.success
@@ -14,6 +15,14 @@ import kotlinx.coroutines.launch
 
 class MyCollectComponent(componentContext: ComponentContext) : ComponentContext by componentContext {
     internal val modelState = instanceKeeper.getOrCreate { MyCollectModelState() }
+
+    init {
+        lifecycle.subscribe(
+            onResume = {
+                modelState.loadMyPlan()
+            }
+        )
+    }
 }
 
 internal class MyCollectModelState : ModelState() {
